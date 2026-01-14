@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第九机关</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 主界面 -->
+    <div class="main-content">
+        <!-- 背景 -->
+        <div class="background" id="background" 
+             style="background-image: url('2.png'); 
+                    background-size: cover; 
+                    background-position: center;
+                    filter: brightness(1);">
+</div>
+        
+        <!-- 菜单按钮 -->
+        <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+        
+        <!-- 时钟 -->
+        <div class="clock-box">
+            <h1>第九机关</h1>
+            <div class="clock" id="clock">时间加载中...</div>
+        </div>
+
+        <!-- 云朵气泡对话框 -->
+        <div class="companion-response">
+            <div id="bubbleContainer">
+                <div class="bubble-cloud" id="responseBubble">
+                    <div class="bubble-content">
+                        <p id="responseText"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 中央角色 -->
+        <div class="character-container">
+            <div class="character">
+                <!-- 重要：这里引用你的角色图片 -->
+                <img src="3.png" alt="我的角色" id="characterImg">
+            </div>
+            <p class="hint">轻松点，到处看看吧</p>
+        </div>
+    </div>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>📒 功能面板</h2>
+            <button class="close-sidebar" id="closeSidebar">×</button>
+        </div>
+
+        <div class="sidebar-tabs">
+            <button class="tab-button active" data-tab="diaryTab">日记</button>
+            <button class="tab-button" data-tab="scheduleTab">日程表</button>
+            <button class="tab-button" data-tab="timerTab">计时器</button>
+            <button class="tab-button" data-tab="settingTab">设置</button>
+        </div>
+
+        <div class="sidebar-content">
+            <!-- 日记选项卡 -->
+            <div id="diaryTab" class="tab-pane active">
+                <div class="diary-module">
+                    <h3><span>✎</span> 今日随笔</h3>
+                    <div class="diary-toolbar">
+                        <div class="toolbar-group">
+                            <label>心情：</label>
+                            <div class="mood-selector">
+                                <button type="button" data-mood="😊 开心">😊</button>
+                                <button type="button" data-mood="😢 伤感">😢</button>
+                                <button type="button" data-mood="🤔 思考">🤔</button>
+                                <button type="button" data-mood="🥱 疲惫">🥱</button>
+                            </div>
+                        </div>
+                        <div class="toolbar-group">
+                            <label>天气：</label>
+                            <div class="weather-selector">
+                                <button type="button" data-weather="☀️ 晴">☀️</button>
+                                <button type="button" data-weather="⛅ 多云">⛅</button>
+                                <button type="button" data-weather="🌧️ 雨">🌧️</button>
+                                <button type="button" data-weather="🌙 夜">🌙</button>
+                            </div>
+                        </div>
+                    </div>
+                    <textarea id="diaryInput" placeholder="写下此刻的心情..."></textarea>
+                    <div class="diary-buttons">
+                        <button id="saveDiaryBtn">💾 保存</button>
+                        <button id="clearDiaryBtn">🗑️ 清空</button>
+                    </div>
+                    <div class="diary-history">
+                        <h4><span>📖</span> 回忆册</h4>
+                        <div class="diary-search">
+                            <input type="text" id="diarySearchInput" 
+                                   placeholder="搜索日记（日期、关键词）">
+                            <button id="diarySearchBtn">🔍</button>
+                            <button id="clearSearchBtn">重置</button>
+                        </div>
+                        <ul id="diaryList">
+                            <li class="empty-tip">还没有日记哦</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 日程选项卡 -->
+            <div id="scheduleTab" class="tab-pane">
+                <div class="schedule-module">
+                    <h3><span>📅</span> 今日日程</h3>
+                    <div class="schedule-input">
+                        <input type="text" id="scheduleInput" placeholder="添加待办事项...">
+                        <button id="addScheduleBtn">+ 添加</button>
+                    </div>
+                    <ul id="scheduleList">
+                        <li class="empty-tip">今天还没有安排</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 计时器选项卡 -->
+            <div id="timerTab" class="tab-pane">
+                <div class="timer-module">
+                    <h3><span>⏱️</span> 专注计时器</h3>
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="timer-controls">
+                        <button id="startTimerBtn">开始</button>
+                        <button id="pauseTimerBtn" disabled>暂停</button>
+                        <button id="resetTimerBtn">重置</button>
+                    </div>
+                    <div class="timer-presets">
+                        <button class="preset-btn" data-minutes="25">专注 25min</button>
+                        <button class="preset-btn" data-minutes="5">休息 5min</button>
+                        <button class="preset-btn" data-minutes="15">长休 15min</button>
+                    </div>
+                    <p class="timer-hint" id="timerHint">准备开始</p>
+                </div>
+            </div>
+
+            <!-- 设置选项卡 -->
+            <div id="settingTab" class="tab-pane">
+                <div class="setting-module">
+                    <h3><span>⚙️</span> 设置</h3>
+                    <!-- 内置背景选择器 -->
+                    <div class="built-in-bgs">
+                        <h4>🎨 更换背景</h4>
+                        <p class="setting-desc">点击下方图片可直接更换背景</p>
+                        <div class="bg-grid" id="bgGrid">
+                            <!-- 背景选项将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 自定义背景输入 -->
+                    <div class="setting-item">
+                        <h4>自定义背景</h4>
+                        <p class="setting-desc">粘贴网络图片地址：</p>
+                        <div class="bg-input-area">
+                            <input type="text" id="bgImageUrl" 
+                                   placeholder="https://example.com/image.jpg">
+                            <button id="saveBgBtn">保存背景</button>
+                        </div>
+                        <p class="setting-desc">右键网络图片→"复制图片地址"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 悬浮状态框 -->
+    <div class="floating-window" id="floatingWindow">
+        <div class="floating-header" id="floatingHeader">
+            <span>📌 状态看板</span>
+            <div class="floating-actions">
+                <button class="minimize-btn" id="minimizeBtn">–</button>
+                <button class="close-btn" id="closeBtn">×</button>
+            </div>
+        </div>
+        
+        <!-- 选项卡导航 -->
+        <div class="floating-tabs">
+            <button class="floating-tab active" data-tab="schedulePage">📅 日程</button>
+            <button class="floating-tab" data-tab="timerPage">⏱️ 计时</button>
+        </div>
+        
+        <!-- 页面容器 -->
+        <div class="floating-pages">
+            <!-- 日程页面 -->
+            <div id="schedulePage" class="floating-page active">
+                <div class="page-header">
+                    <h4>今日日程</h4>
+                    <span class="schedule-count">已完成: <span id="completedCount">0</span>/<span id="totalCount">0</span></span>
+                </div>
+                <ul id="floatingScheduleList">
+                    <li class="empty-tip">今天还没有安排</li>
+                </ul>
+            </div>
+            
+            <!-- 计时器页面 -->
+            <div id="timerPage" class="floating-page">
+                <div class="page-header">
+                    <h4>计时器状态</h4>
+                </div>
+                <div class="floating-timer" id="floatingTimerDisplay">25:00</div>
+                <div class="timer-progress">
+                    <div class="progress-bar" id="timerProgressBar"></div>
+                    <div class="progress-text" id="timerProgressText">0%</div>
+                </div>
+                <div class="timer-info">
+                    <p>当前状态: <span id="timerStatusText">未运行</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
